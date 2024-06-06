@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center">Profil</h2>
+    <p><strong>Vorname:</strong> {{ user.first_name }}</p>
+    <p><strong>Nachname:</strong> {{ user.last_name }}</p>
+    <p><strong>E-Mail:</strong> {{ user.email }}</p>
+    <p><strong>Adresse:</strong> {{ user.address }}</p>
+    <p><strong>Stadt:</strong> {{ user.city }}</p>
+    <p><strong>Hausnummer:</strong> {{ user.house_number }}</p>
+    <p><strong>Postleitzahl:</strong> {{ user.postal_code }}</p>
+    <p><strong>Land:</strong> {{ user.country }}</p>
+    <p><strong>Geburtstag:</strong> {{ user.birthday }}</p>
+    <p><strong>Telefonnummer:</strong> {{ user.phone_number }}</p>
+    <p><strong>Guthaben:</strong> {{ user.balance }}</p>
+</div>
+{% endblock %}

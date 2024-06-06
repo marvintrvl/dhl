@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Bestellungen{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center">Bestellungen</h2>
+    <ul>
+        {% for order in orders %}
+            <li class="border-b py-2">
+                <a href="{% url 'order_detail' order.order_id %}" class="text-blue-600">{{ order.order_id }}</a> - {{ order.date_ordered }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
