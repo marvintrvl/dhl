@@ -103,9 +103,17 @@ def order_list(request):
     orders = Order.objects.filter(package__recipient=request.user)
     return render(request, 'core/order_list.html', {'orders': orders})
 
+@login_required
+def order_detail(request, order_id):
+    order = get_object_or_404(Order, order_id=order_id)
+    return render(request, 'core/order_detail.html', {'order': order})
+
+
 # core/views.py
 from django.shortcuts import render
 
 def index(request):
     return render(request, 'core/index.html')
 
+def details(request):
+    return render(request, 'core/details.html')

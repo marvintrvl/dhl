@@ -23,6 +23,9 @@ class Business(models.Model):
     phone_number = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
 
+    def __str__(self):
+        return self.name
+
 class Package(models.Model):
     PACKAGE_STATUS_CHOICES = [
         ('IN_TRANSIT', 'In Transit'),
@@ -30,7 +33,6 @@ class Package(models.Model):
         ('RETURNED', 'Returned'),
         ('EMPTY', 'Empty'),
     ]
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     sender = models.ForeignKey(Business, related_name='sent_packages', on_delete=models.CASCADE)
     recipient = models.ForeignKey(Customer, related_name='received_packages', on_delete=models.CASCADE)
@@ -38,8 +40,14 @@ class Package(models.Model):
     gps_tracking_code = models.CharField(max_length=100)
     deposit_paid = models.DecimalField(max_digits=10, decimal_places=2)
 
+    def __str__(self):
+        return f'{self.sender} to {self.recipient}'
+
 class Order(models.Model):
     order_id = models.CharField(max_length=100, unique=True)
     package = models.OneToOneField(Package, on_delete=models.CASCADE)
     date_ordered = models.DateTimeField(auto_now_add=True)
-    details = models.JSONField()
+    details = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.order_id
