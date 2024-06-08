@@ -104,21 +104,32 @@ def index(request):
 
 def details(request):
     return render(request, 'core/details.html')
-
+    
 @api_view(['GET'])
 def scan_qr_code(request, package_id):
     package = get_object_or_404(Package, id=package_id)
     
     if package.status != 'EMPTY':
-        package.status = 'EMPTY'
+        # Credit deposit to recipient's balance first
         package.recipient.balance += package.deposit_paid
         package.recipient.save()
+
+        # Clear package details except for the id
+        package.status = 'EMPTY'
+        package.gps_tracking_code = ''
+        package.qr_code = None
+        package.is_cleared = True
+        package.sender = None
+        package.recipient = None
+        
+        # Save the package
         package.save()
         
         # Redirect to a success page
         return redirect('scan_success')
     
     return Response(status=400, data={'error': 'Package already returned or invalid status'})
+
 
 def scan_success(request):
     return render(request, 'core/scan_success.html')

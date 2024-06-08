@@ -34,16 +34,16 @@ class Package(models.Model):
         ('EMPTY', 'Empty'),
     ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    sender = models.ForeignKey(Business, related_name='sent_packages', on_delete=models.CASCADE)
-    recipient = models.ForeignKey(Customer, related_name='received_packages', on_delete=models.CASCADE)
+    sender = models.ForeignKey(Business, related_name='sent_packages', on_delete=models.CASCADE, null=True)
+    recipient = models.ForeignKey(Customer, related_name='received_packages', on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=20, choices=PACKAGE_STATUS_CHOICES, default='IN_TRANSIT')
-    gps_tracking_code = models.CharField(max_length=100)
-    deposit_paid = models.DecimalField(max_digits=10, decimal_places=2)
+    gps_tracking_code = models.CharField(max_length=100, blank=True)
+    deposit_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     qr_code = models.ImageField(upload_to='qr_codes/', null=True, blank=True)
+    is_cleared = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.sender} to {self.recipient}'
-
 
 class Order(models.Model):
     order_id = models.CharField(max_length=100, unique=True)
