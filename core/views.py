@@ -80,15 +80,6 @@ def order_detail(request, order_id):
     return render(request, 'packaging/order_detail.html', {'order': order})
 
 @login_required
-def return_package(request, package_id):
-    package = get_object_or_404(Package, id=package_id)
-    package.status = 'EMPTY'
-    package.recipient.balance += package.deposit_paid
-    package.recipient.save()
-    package.save()
-    return redirect('user_balance')
-
-@login_required
 def user_balance(request):
     user = request.user
     return render(request, 'core/user_balance.html', {'balance': user.balance})
@@ -108,12 +99,26 @@ def order_detail(request, order_id):
     order = get_object_or_404(Order, order_id=order_id)
     return render(request, 'core/order_detail.html', {'order': order})
 
-
-# core/views.py
-from django.shortcuts import render
-
 def index(request):
     return render(request, 'core/index.html')
 
 def details(request):
     return render(request, 'core/details.html')
+
+@api_view(['GET'])
+def scan_qr_code(request, package_id):
+    package = get_object_or_404(Package, id=package_id)
+    
+    if package.status != 'EMPTY':
+        package.status = 'EMPTY'
+        package.recipient.balance += package.deposit_paid
+        package.recipient.save()
+        package.save()
+        
+        # Redirect to a success page
+        return redirect('scan_success')
+    
+    return Response(status=400, data={'error': 'Package already returned or invalid status'})
+
+def scan_success(request):
+    return render(request, 'core/scan_success.html')

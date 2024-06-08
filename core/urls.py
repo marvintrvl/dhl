@@ -10,8 +10,9 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('orders/', views.order_list, name='order_list'),
     path('order/<str:order_id>/', views.order_detail, name='order_detail'),
-    path('return_package/<str:package_id>/', views.return_package, name='return_package'),
     path('balance/', views.user_balance, name='user_balance'),
     path('order/<str:order_id>/', views.order_detail, name='order_detail'),
     path('details/', views.details, name='details'),
+    path('scan/<str:package_id>/', views.scan_qr_code, name='scan_qr_code'),
+    path('scan-success/', views.scan_success, name='scan_success'),
 ]

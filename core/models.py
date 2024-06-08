@@ -39,9 +39,11 @@ class Package(models.Model):
     status = models.CharField(max_length=20, choices=PACKAGE_STATUS_CHOICES, default='IN_TRANSIT')
     gps_tracking_code = models.CharField(max_length=100)
     deposit_paid = models.DecimalField(max_digits=10, decimal_places=2)
+    qr_code = models.ImageField(upload_to='qr_codes/', null=True, blank=True)
 
     def __str__(self):
         return f'{self.sender} to {self.recipient}'
+
 
 class Order(models.Model):
     order_id = models.CharField(max_length=100, unique=True)
