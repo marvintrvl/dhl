@@ -8,29 +8,33 @@
     
     <div class="mb-8">
         <h3 class="text-2xl font-semibold text-green-600 mb-4">Order Information</h3>
-        <p class="text-lg"><strong>Order ID:</strong> {{ order.order_id }}</p>
-        <p class="text-lg"><strong>Date Ordered:</strong> {{ order.date_ordered }}</p>
-        <p class="text-lg"><strong>Details:</strong> {{ order.details }}</p>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+            <p class="text-lg"><strong>Order ID:</strong> {{ order.order_id }}</p>
+            <p class="text-lg"><strong>Date Ordered:</strong> {{ order.date_ordered }}</p>
+            <p class="text-lg"><strong>Details:</strong> {{ order.details }}</p>
+        </div>
     </div>
     
     <div class="mb-8">
         <h3 class="text-2xl font-semibold text-green-600 mb-4">Package Information</h3>
-        <p class="text-lg"><strong>Status:</strong> 
-            <span class="px-2 py-1 rounded-full 
-                        {% if order.package.status == 'EMPTY' %}
-                            bg-red-200 text-red-800
-                        {% else %}
-                            bg-green-100 text-green-800
-                        {% endif %}
-                        ">
-                {{ order.package.get_status_display }}
-            </span>
-        </p>
-        <p class="text-lg"><strong>Deposit Paid:</strong> {{ order.package.deposit_paid }}€</p>
-        {% if order.package.status == 'EMPTY' %}
-            <p class="text-lg text-red-500">This package has been returned.</p>
-        {% endif %}
-        <p class="text-lg"><strong>GPS Tracking Code:</strong> {{ order.package.gps_tracking_code }}</p>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-inner">
+            <p class="text-lg"><strong>Status:</strong> 
+                <span class="px-2 py-1 rounded-full 
+                            {% if order.package.status == 'EMPTY' %}
+                                bg-red-200 text-red-800
+                            {% else %}
+                                bg-green-100 text-green-800
+                            {% endif %}
+                            ">
+                    {{ order.package.get_status_display }}
+                </span>
+            </p>
+            <p class="text-lg"><strong>Deposit Paid:</strong> {{ order.package.deposit_paid }}€</p>
+            {% if order.package.status == 'EMPTY' %}
+                <p class="text-lg text-red-500">This package has been returned.</p>
+            {% endif %}
+            <p class="text-lg"><strong>GPS Tracking Code:</strong> {{ order.package.gps_tracking_code }}</p>
+        </div>
     </div>
     
     <div id="mapid" style="height: 400px; width: 100%;"></div> <!-- Add map container here -->
