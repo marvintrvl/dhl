@@ -117,7 +117,6 @@ def scan_qr_code(request, package_id):
         # Clear package details except for the id
         package.status = 'EMPTY'
         package.gps_tracking_code = ''
-        package.qr_code = None
         package.is_cleared = True
         package.sender = None
         package.recipient = None
