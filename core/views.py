@@ -114,6 +114,8 @@ def scan_qr_code(request, package_id):
         package.recipient.balance += package.deposit_paid
         package.recipient.save()
 
+        package.reuse_count += 1
+
         # Clear package details except for the id
         package.status = 'EMPTY'
         package.gps_tracking_code = ''

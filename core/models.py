@@ -41,6 +41,7 @@ class Package(models.Model):
     deposit_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     qr_code = models.ImageField(upload_to='qr_codes/', null=True, blank=True)
     is_cleared = models.BooleanField(default=False)
+    reuse_count = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.sender} to {self.recipient}'
